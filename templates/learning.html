@@ -1,21 +1,35 @@
 {% extends "layout.html" %}
-
-{% block title %}Learning - Reverse Engineering{% endblock %}
-
+{% block title %}Learning - ETSU CTF Dashboard{% endblock %}
 {% block content %}
-  <h1>🧠 Reverse Engineering 101</h1>
-  <p>This section covers fundamental concepts and tools used in embedded reverse engineering during the eCTF.</p>
+  <div class="container" id="learning-section">
+    <h1 class="fade-in">Lessons from Past eCTF Competitions</h1>
+    <p class="fade-in">Explore strategies and insights shared by teams and industry experts. Learn from past challenges to build a robust attack and defense strategy.</p>
 
-  <h2>🔍 Using Ghidra for Firmware Analysis</h2>
-  <p>Ghidra is a free and open-source software reverse engineering tool. We used Ghidra to decompile and analyze firmware binaries (like bootloaders and <code>.prot</code> files). It helped in understanding the program flow and identifying vulnerabilities or secrets hidden in the code.</p>
-  <p><strong>How to use Ghidra:</strong> Install Ghidra, open the firmware binary in it, and use the decompiler and symbol tree to explore functions. For example, we discovered how the bootloader’s authentication worked by reading the decompiled C code and assembly side-by-side.</p>
+    <h2 class="fade-in">Reverse Engineering Bootloaders</h2>
+    <p class="fade-in">
+      Many teams begin by reverse-engineering firmware bootloaders to discover vulnerabilities. In one instance, a team uncovered weaknesses in the bootloader routine that allowed them to bypass security checks entirely.
+    </p>
 
-  <h2>💻 Hardware Debugging with OpenOCD</h2>
-  <p>OpenOCD (Open On-Chip Debugger) is a tool that allows interfacing with hardware debuggers (JTAG/SWD). During eCTF, we used OpenOCD with a hardware debugger to pause the firmware, inspect memory, and dump secrets. This was crucial for understanding hardware-protected aspects of the system.</p>
-  <p><strong>Tip:</strong> We connected an STM32 discovery board via USB and ran OpenOCD commands to halt the CPU and read flash memory. Knowing a bit of the target microcontroller’s architecture helps when using OpenOCD.</p>
+    <h2 class="fade-in">Token Generation &amp; Bypass Techniques</h2>
+    <p class="fade-in">
+      Effective token generation is key. Some teams exploited common errors in token validation to perform replay attacks or bypass authentication entirely. Studying these methods can help you avoid similar pitfalls.
+    </p>
 
-  <h2>📁 Understanding .prot Files</h2>
-  <p>The <code>.prot</code> files in this project were proprietary data files used by the device. By reverse engineering their format (using Ghidra to see how the firmware reads them), we learned how to extract the embedded secrets. This process involved identifying magic numbers, data structures, and encryption routines in the firmware.</p>
+    <h2 class="fade-in">Memory Exploits & Buffer Overflows</h2>
+    <p class="fade-in">
+      Real-world vulnerabilities such as buffer overflows have been exploited to create ROP chains. Learn about these techniques and how proper memory safety can mitigate such risks.
+    </p>
 
-  <p>Through these tools and techniques, we gradually peeled back the layers of the system, which was a great learning experience!</p>
+    <h2 class="fade-in">Hardware Interfaces (JTAG, UART, etc.)</h2>
+    <p class="fade-in">
+      Physical interfaces like UART and JTAG can reveal sensitive information if left unsecured. Case studies from previous eCTF events show how attackers used these interfaces to extract encryption keys and control flows.
+    </p>
+
+    <h2 class="fade-in">Team Strategies & Community Insights</h2>
+    <ul class="fade-in">
+      <li><strong>Documentation:</strong> Top teams often provide detailed write-ups after the competition. These documents reveal both successful strategies and lessons learned from failed attempts.</li>
+      <li><strong>Cross-Team Sharing:</strong> Information posted on Reddit or LinkedIn by participants has helped new teams refine their approaches.</li>
+      <li><strong>Tool Usage:</strong> Leveraging open-source tools like Ghidra, OpenOCD, and custom Python scripts can give your team a competitive edge.</li>
+    </ul>
+  </div>
 {% endblock %}

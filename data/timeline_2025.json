@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2025-01-15",
+    "title": "2025 eCTF Kickoff Meeting",
+    "description": "Teams assemble and competition details are released."
+  },
+  {
+    "date": "2025-02-10",
+    "title": "Firmware Analysis Begins",
+    "description": "Teams start reverse engineering and analyzing firmware."
+  },
+  {
+    "date": "2025-03-05",
+    "title": "Tool Development Milestone",
+    "description": "Key tools (UART simulator, decoders) are developed and shared."
+  },
+  {
+    "date": "2025-04-01",
+    "title": "Dashboard & Resources Live",
+    "description": "The dashboard is launched to centralize competition information."
+  }
+]

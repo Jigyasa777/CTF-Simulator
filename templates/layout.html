@@ -3,18 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Cybersecurity Dashboard{% endblock %}</title>
+  <!-- Optional: add a custom font -->
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <nav>
-    <a href="/">🏠 Home</a> |
-    <a href="/timeline">🕰️ Timeline</a> |
-    <a href="/toolkit">🧰 Toolkit</a> |
-    <a href="/learning">🧠 Learning</a> |
-    <a href="/resources">📥 Resources</a> |
-    <a href="/about">📣 About</a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <!-- Left side: ETSU logo and brand -->
+    <div class="navbar-brand">
+      <a href="/" class="logo">
+        <img src="{{ url_for('static', filename='images/etsu_logo.png') }}" alt="ETSU Logo" />
+        <span class="brand-text">MyCTF Dashboard</span>
+      </a>
+    </div>
+    <!-- Right side: Navbar Links -->
+    <ul class="navbar-links">
+      <li><a href="/">Home</a></li>
+      <!-- Future links can be added here -->
+    </ul>
   </nav>
-  <main>
+  <!-- Main content area -->
+  <main class="content-wrapper">
     {% block content %}{% endblock %}
   </main>
 </body>

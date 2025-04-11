@@ -1,15 +1,33 @@
 {% extends "layout.html" %}
-
 {% block title %}Home - Cybersecurity Dashboard{% endblock %}
 
 {% block content %}
-  <h1>Welcome to the 2025 MITRE eCTF Dashboard 💛</h1>
-  <p>This dashboard is a capstone project documenting a journey through embedded reverse engineering and tool development for the MITRE eCTF competition.</p>
+  <div class="welcome-section">
+    <h1>Welcome to the MITRE eCTF Dashboard</h1>
+    <h2>👋 Hello ETSU Cyber Bucs! Your dynamic CTF guide is here.</h2>
+    <p>Join us on a vibrant journey through reverse engineering tips, competitive timelines, interactive tools, and much more!</p>
+  </div>
 
-  <ul>
-    <li>✅ Attack Simulation Toolkit (UART Command-line Simulator & Encoding Playground)</li>
-    <li>✅ Timeline of 2024 & 2025 eCTF events</li>
-    <li>✅ Reverse Engineering learning module (Ghidra, OpenOCD, .prot files)</li>
-    <li>✅ Resources & Downloads for further study</li>
-  </ul>
+  <div class="dashboard-cards">
+    <div class="card" onclick="window.location.href='/toolkit'">
+      <div class="card-title">🧰 Toolkit</div>
+      <div class="card-description">UART Simulator &amp; Encoder/Decoder Playground</div>
+    </div>
+    <div class="card" onclick="window.location.href='/timeline'">
+      <div class="card-title">🕰️ Timeline</div>
+      <div class="card-description">2024 &amp; 2025 eCTF Events</div>
+    </div>
+    <div class="card" onclick="window.location.href='/learning'">
+      <div class="card-title">🧠 Learning</div>
+      <div class="card-description">Reverse Engineering Modules &amp; Tips</div>
+    </div>
+    <div class="card" onclick="window.location.href='/resources'">
+      <div class="card-title">📥 Resources</div>
+      <div class="card-description">Downloadable Scripts &amp; Guides</div>
+    </div>
+    <div class="card" onclick="window.location.href='/about'">
+      <div class="card-title">📣 About</div>
+      <div class="card-description">Project Info, Credits, and More</div>
+    </div>
+  </div>
 {% endblock %}

@@ -9,6 +9,7 @@ def home():
 
 @app.route('/timeline')
 def timeline():
+    # Load timeline JSON files (make sure these are filled with valid JSON data)
     with open('data/timeline_2024.json') as f:
         timeline_2024 = json.load(f)
     with open('data/timeline_2025.json') as f:
@@ -23,7 +24,6 @@ def learning():
 def toolkit():
     uart_output = None
     encode_output = None
-
     if request.method == 'POST':
         if 'command' in request.form:
             command = request.form.get('command', '').strip()
@@ -71,6 +71,10 @@ def toolkit():
 @app.route('/resources')
 def resources():
     return render_template('resources.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

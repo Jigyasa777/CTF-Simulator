@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Help - ETSU CTF Dashboard{% endblock %}
+{% block content %}
+  <div class="faq-section">
+    <h1 class="fade-in">Help &amp; FAQs</h1>
+    <p class="fade-in" style="text-align: center;">Find answers to common questions below.</p>
+    
+    <!-- FAQ Item 1 -->
+    <details class="faq-item fade-in">
+      <summary>What is the MITRE eCTF?</summary>
+      <p>The MITRE Embedded Capture the Flag (eCTF) is an embedded security competition hosted by MITRE that challenges teams to design secure devices and later attack each other's systems. It's a hands-on, real-world way to learn about embedded cybersecurity.</p>
+    </details>
+    
+    <!-- FAQ Item 2 -->
+    <details class="faq-item fade-in">
+      <summary>How do I use the UART simulator?</summary>
+      <p>The Toolkit page includes a UART Simulator tool. Simply type a command into the input box, click the run button, and view the simulated output. It's designed to mimic interaction with a device's serial console.</p>
+    </details>
+    
+    <!-- FAQ Item 3 -->
+    <details class="faq-item fade-in">
+      <summary>How do I decode Base64 or use XOR?</summary>
+      <p>On the Toolkit page, select the appropriate option (Base64 or XOR). Enter the encoded text and any required key (for XOR), then press the convert button to see the result.</p>
+    </details>
+    
+    <!-- FAQ Item 4 -->
+    <details class="faq-item fade-in">
+      <summary>Who is this dashboard for?</summary>
+      <p>This dashboard is built specifically for ETSU students involved in the MITRE eCTF. It centralizes competition timelines, tools, and learning resources to help you succeed.</p>
+    </details>
+    
+    <!-- FAQ Item 5 -->
+    <details class="faq-item fade-in">
+      <summary>Who do I contact for help at ETSU?</summary>
+      <p>If you need assistance, please contact your course instructor or the ETSU cybersecurity department. More support details may be added as the competition progresses.</p>
+    </details>
+  </div>
+{% endblock %}

@@ -1,44 +1,93 @@
 {% extends "layout.html" %}
-
-{% block title %}Toolkit - Attack Simulator & Encoding{% endblock %}
+{% block title %}Toolkit - Cybersecurity Dashboard{% endblock %}
 
 {% block content %}
-  <h1>🧰 Attack Simulation Toolkit</h1>
-  <p>Use the tools below to simulate interacting with the device and to encode/decode data.</p>
+<div class="container" id="toolkit-section">
+  <h1>Embedded Security Toolkit</h1>
+  <p>Try these interactive labs to simulate common eCTF attacks and tools. Click a card to launch the demo:</p>
 
-  <!-- UART Command-Line Simulator -->
-  <h2>UART Command-Line Simulator</h2>
-  <p>Type a command and press Enter to simulate a UART console on an embedded device.</p>
-  <form method="post" style="margin-bottom: 20px;">
-    <input type="text" name="command" placeholder="Enter command..." style="width: 70%;" />
-    <button type="submit">Run</button>
-  </form>
-  {% if uart_output is not none %}
-    <div>
-      <strong>Output:</strong>
-      <pre>{{ uart_output }}</pre>
+  <!-- Toolkit Grid -->
+  <div class="toolkit-grid">
+    <!-- UART CLI Demo Card -->
+    <div class="tool-card">
+      <h2>UART Console Demo</h2>
+      <p>Interact with a simulated UART interface. Capture boot logs or inject commands as if you were connected to a device's debug port.</p>
+      <button class="launch-btn" onclick="launchUART()">Launch UART Terminal</button>
+      <div id="uart-terminal" class="terminal-window" style="display:none;">
+        <pre>> <span class="cmd">bootloader_status</span>
+Bootloader v1.2.3 ready.
+Enter password: ****
+Access Granted. Welcome!
+</pre>
+      </div>
     </div>
-  {% endif %}
 
-  <!-- Encoding/Decoding Playground -->
-  <h2>Encoding/Decoding Playground</h2>
-  <p>Convert text to/from Base64 or Hex, or XOR a string with a key (basic encoding).</p>
-  <form method="post">
-    <input type="text" name="text" placeholder="Text to convert" style="width: 60%;" value="{{ request.form.get('text', '') }}" />
-    <select name="operation">
-      <option value="base64_encode" {% if request.form.get('operation') == 'base64_encode' %}selected{% endif %}>Base64 Encode</option>
-      <option value="base64_decode" {% if request.form.get('operation') == 'base64_decode' %}selected{% endif %}>Base64 Decode</option>
-      <option value="hex_encode" {% if request.form.get('operation') == 'hex_encode' %}selected{% endif %}>Hex Encode</option>
-      <option value="hex_decode" {% if request.form.get('operation') == 'hex_decode' %}selected{% endif %}>Hex Decode</option>
-      <option value="xor" {% if request.form.get('operation') == 'xor' %}selected{% endif %}>XOR with Key</option>
-    </select>
-    <input type="text" name="key" placeholder="key (for XOR)" value="{{ request.form.get('key', '') }}" style="width: 15%;" />
-    <button type="submit">Convert</button>
-  </form>
-  {% if encode_output is not none %}
-    <div>
-      <strong>Result:</strong>
-      <pre>{{ encode_output }}</pre>
+    <!-- Encryption/Decryption Playground Card -->
+    <div class="tool-card">
+      <h2>Crypto Playground</h2>
+      <p>Experiment with encryption and decryption. Use a sample key to see how plaintext and ciphertext relate.</p>
+      <div class="crypto-demo">
+        <input type="text" id="plaintext" placeholder="Enter text" />
+        <button onclick="doEncrypt()">Encrypt with AES</button>
+        <p id="ciphertext" class="output"></p>
+      </div>
     </div>
-  {% endif %}
+
+    <!-- Firmware RE (Ghidra) Demo Card -->
+    <div class="tool-card">
+      <h2>Firmware RE Lab</h2>
+      <p>Examine a firmware snippet in a Ghidra-like view. Learn how to identify functions and potential vulnerabilities in binary code.</p>
+      <button class="launch-btn" onclick="showFirmware()">Open Firmware Sample</button>
+      <div id="firmware-sample" style="display:none;">
+        <pre class="code-block">
+// Example disassembled code
+08000000 <start>:
+08000000:  LDR R0, =SecretKey    ; Load address of SecretKey
+08000004:  BL  DecryptToken     ; Call decryption routine
+...
+08000020 <SecretKey>:
+08000020:  .word 0x12EF56AB     ; Encrypted token key
+        </pre>
+      </div>
+    </div>
+
+    <!-- JTAG/OpenOCD Debug Demo Card -->
+    <div class="tool-card">
+      <h2>Hardware Debug (JTAG)</h2>
+      <p>Simulate a JTAG debugging session. Use OpenOCD commands to halt a CPU and inspect memory for secrets.</p>
+      <button class="launch-btn" onclick="showJTAG()">Start Debug Session</button>
+      <div id="jtag-demo" style="display:none;">
+        <pre class="code-block">
+> openocd -f interface.cfg -c "init; halt"
+TARGET HALTED at 0x08001000
+> mdw 0x08008000 3   ; Read 3 words from memory
+08008000: 45435446 7B4B3A...  ; (hex values representing "ECTF{K:...")</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function launchUART() {
+    var terminal = document.getElementById('uart-terminal');
+    terminal.style.display = (terminal.style.display === 'none' || terminal.style.display === '') ? 'block' : 'none';
+  }
+
+  function showFirmware() {
+    var firmware = document.getElementById('firmware-sample');
+    firmware.style.display = (firmware.style.display === 'none' || firmware.style.display === '') ? 'block' : 'none';
+  }
+
+  function showJTAG() {
+    var jtag = document.getElementById('jtag-demo');
+    jtag.style.display = (jtag.style.display === 'none' || jtag.style.display === '') ? 'block' : 'none';
+  }
+
+  function doEncrypt() {
+    var plaintext = document.getElementById('plaintext').value;
+    // Dummy encryption: reverse string as a demonstration.
+    var ciphertext = plaintext.split('').reverse().join('');
+    document.getElementById('ciphertext').innerText = ciphertext;
+  }
+</script>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Timeline - Cybersecurity Dashboard{% endblock %}
+
+{% block content %}
+<div class="timeline">
+  <h1 style="text-align: center;">📅 eCTF Timeline (2024 &amp; 2025)</h1>
+  <p style="text-align: center;">Key events arranged as a visual flow chart.</p>
+
+  <!-- 2024 Events -->
+  {% for event in events_2024 %}
+  <div class="timeline-item {% if loop.index is even %}right{% else %}left{% endif %}">
+    <div class="timeline-content">
+      <span class="date">{{ event.date }}</span>
+      <h3>{{ event.title }}</h3>
+      <p>{{ event.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- 2025 Events -->
+  {% for event in events_2025 %}
+  <div class="timeline-item {% if loop.index is even %}right{% else %}left{% endif %}">
+    <div class="timeline-content">
+      <span class="date">{{ event.date }}</span>
+      <h3>{{ event.title }}</h3>
+      <p>{{ event.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
