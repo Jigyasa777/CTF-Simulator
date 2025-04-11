@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}Toolkit - Attack Simulator & Encoding{% endblock %}
+
+{% block content %}
+  <h1>🧰 Attack Simulation Toolkit</h1>
+  <p>Use the tools below to simulate interacting with the device and to encode/decode data.</p>
+
+  <!-- UART Command-Line Simulator -->
+  <h2>UART Command-Line Simulator</h2>
+  <p>Type a command and press Enter to simulate a UART console on an embedded device.</p>
+  <form method="post" style="margin-bottom: 20px;">
+    <input type="text" name="command" placeholder="Enter command..." style="width: 70%;" />
+    <button type="submit">Run</button>
+  </form>
+  {% if uart_output is not none %}
+    <div>
+      <strong>Output:</strong>
+      <pre>{{ uart_output }}</pre>
+    </div>
+  {% endif %}
+
+  <!-- Encoding/Decoding Playground -->
+  <h2>Encoding/Decoding Playground</h2>
+  <p>Convert text to/from Base64 or Hex, or XOR a string with a key (basic encoding).</p>
+  <form method="post">
+    <input type="text" name="text" placeholder="Text to convert" style="width: 60%;" value="{{ request.form.get('text', '') }}" />
+    <select name="operation">
+      <option value="base64_encode" {% if request.form.get('operation') == 'base64_encode' %}selected{% endif %}>Base64 Encode</option>
+      <option value="base64_decode" {% if request.form.get('operation') == 'base64_decode' %}selected{% endif %}>Base64 Decode</option>
+      <option value="hex_encode" {% if request.form.get('operation') == 'hex_encode' %}selected{% endif %}>Hex Encode</option>
+      <option value="hex_decode" {% if request.form.get('operation') == 'hex_decode' %}selected{% endif %}>Hex Decode</option>
+      <option value="xor" {% if request.form.get('operation') == 'xor' %}selected{% endif %}>XOR with Key</option>
+    </select>
+    <input type="text" name="key" placeholder="key (for XOR)" value="{{ request.form.get('key', '') }}" style="width: 15%;" />
+    <button type="submit">Convert</button>
+  </form>
+  {% if encode_output is not none %}
+    <div>
+      <strong>Result:</strong>
+      <pre>{{ encode_output }}</pre>
+    </div>
+  {% endif %}
+{% endblock %}

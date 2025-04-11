@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}Resources & Downloads{% endblock %}
+
+{% block content %}
+  <h1>📥 Resources & Downloads</h1>
+  <p>Click to download the following helpful files:</p>
+  <ul>
+    <li><a href="{{ url_for('static', filename='files/firmware_analysis_report.pdf') }}" download>Firmware Analysis Report (PDF)</a></li>
+    <li><a href="{{ url_for('static', filename='files/uart_tool.py') }}" download>UART Simulation Python Script</a></li>
+    <li><a href="{{ url_for('static', filename='files/reverse_engineering_slides.pdf') }}" download>Reverse Engineering Slides (PDF)</a></li>
+  </ul>
+{% endblock %}

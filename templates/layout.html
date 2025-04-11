@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Cybersecurity Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <a href="/">🏠 Home</a> |
+    <a href="/timeline">🕰️ Timeline</a> |
+    <a href="/toolkit">🧰 Toolkit</a> |
+    <a href="/learning">🧠 Learning</a> |
+    <a href="/resources">📥 Resources</a> |
+    <a href="/about">📣 About</a>
+  </nav>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

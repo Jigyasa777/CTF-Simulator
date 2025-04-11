@@ -1,0 +1,57 @@
+/* Dark theme background and text */
+body {
+    background-color: #121212;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navigation bar styling */
+  nav {
+    background: #1e1e1e;
+    padding: 10px 20px;
+  }
+  nav a {
+    color: #ccc;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  nav a:hover {
+    color: #ffcc00;  /* highlight color on hover (yellow) */
+    text-decoration: underline;
+  }
+  
+  /* Main content area */
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+  
+  /* Headings */
+  h1, h2, h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+  }
+  
+  /* Paragraphs */
+  p {
+    line-height: 1.6;
+  }
+  
+  /* Lists */
+  ul {
+    list-style-type: square;
+    margin-left: 20px;
+  }
+  
+  /* Code blocks / preformatted text (for CLI simulator) */
+  pre, code {
+    background: #1e1e1e;
+    color: #00ff00;
+    padding: 10px;
+    font-family: Consolas, monospace;
+    overflow-x: auto;
+  }
+  

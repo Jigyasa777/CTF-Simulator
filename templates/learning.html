@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Learning - Reverse Engineering{% endblock %}
+
+{% block content %}
+  <h1>🧠 Reverse Engineering 101</h1>
+  <p>This section covers fundamental concepts and tools used in embedded reverse engineering during the eCTF.</p>
+
+  <h2>🔍 Using Ghidra for Firmware Analysis</h2>
+  <p>Ghidra is a free and open-source software reverse engineering tool. We used Ghidra to decompile and analyze firmware binaries (like bootloaders and <code>.prot</code> files). It helped in understanding the program flow and identifying vulnerabilities or secrets hidden in the code.</p>
+  <p><strong>How to use Ghidra:</strong> Install Ghidra, open the firmware binary in it, and use the decompiler and symbol tree to explore functions. For example, we discovered how the bootloader’s authentication worked by reading the decompiled C code and assembly side-by-side.</p>
+
+  <h2>💻 Hardware Debugging with OpenOCD</h2>
+  <p>OpenOCD (Open On-Chip Debugger) is a tool that allows interfacing with hardware debuggers (JTAG/SWD). During eCTF, we used OpenOCD with a hardware debugger to pause the firmware, inspect memory, and dump secrets. This was crucial for understanding hardware-protected aspects of the system.</p>
+  <p><strong>Tip:</strong> We connected an STM32 discovery board via USB and ran OpenOCD commands to halt the CPU and read flash memory. Knowing a bit of the target microcontroller’s architecture helps when using OpenOCD.</p>
+
+  <h2>📁 Understanding .prot Files</h2>
+  <p>The <code>.prot</code> files in this project were proprietary data files used by the device. By reverse engineering their format (using Ghidra to see how the firmware reads them), we learned how to extract the embedded secrets. This process involved identifying magic numbers, data structures, and encryption routines in the firmware.</p>
+
+  <p>Through these tools and techniques, we gradually peeled back the layers of the system, which was a great learning experience!</p>
+{% endblock %}
