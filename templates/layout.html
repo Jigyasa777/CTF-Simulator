@@ -3,29 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Cybersecurity Dashboard{% endblock %}</title>
-  <!-- Optional: add a custom font -->
+  <!-- Custom font -->
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar">
-    <!-- Left side: ETSU logo and brand -->
+    <!-- Left side: ETSU text -->
     <div class="navbar-brand">
-      <a href="/" class="logo">
-        <img src="{{ url_for('static', filename='images/etsu_logo.png') }}" alt="ETSU Logo" />
-        <span class="brand-text">MyCTF Dashboard</span>
-      </a>
+      <a href="/" class="brand-text">East Tennesse State University</a>
     </div>
     <!-- Right side: Navbar Links -->
     <ul class="navbar-links">
       <li><a href="/">Home</a></li>
-      <!-- Future links can be added here -->
+      <!-- Add more links here -->
     </ul>
   </nav>
+
   <!-- Main content area -->
   <main class="content-wrapper">
-    {% block content %}{% endblock %}
+    {% block content %}
+      <h1 class="animated-heading">Welcome to the MITRE eCTF Dashboard</h1>
+      <p class="description-line">
+        Join us on a vibrant journey through reverse engineering tips, competitive timelines, interactive tools, and much more!
+      </p>
+    {% endblock %}
   </main>
+
+  <!-- Footer -->
+  <footer class="dashboard-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <img src="{{ url_for('static', filename='css/images/footer_left.png') }}" alt="Footer Left Image">
+      </div>
+      <div class="footer-center">
+        <a href="https://www.etsu.edu/cbat/news_cbat/24.5.9_cyber_bucs_competiton.php" class="flash-card">
+          ETSU’s Cyber Bucs
+        </a>
+      </div>
+      <div class="footer-right">
+        <img src="{{ url_for('static', filename='css/images/footer_right.png') }}" alt="Footer Right Image">
+      </div>
+    </div>
+
+    <!-- Trademark -->
+    <p class="trademark">© 2025 Jigyasa. All rights reserved.</p>
+  </footer>
 </body>
 </html>

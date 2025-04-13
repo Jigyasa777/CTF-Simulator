@@ -1,13 +1,151 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resources & Downloads - Cybersecurity Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
 
-{% block title %}Resources & Downloads{% endblock %}
+    .content-wrapper {
+      padding: 3em;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-{% block content %}
-  <h1>📥 Resources & Downloads</h1>
-  <p>Click to download the following helpful files:</p>
-  <ul>
-    <li><a href="{{ url_for('static', filename='files/firmware_analysis_report.pdf') }}" download>Firmware Analysis Report (PDF)</a></li>
-    <li><a href="{{ url_for('static', filename='files/uart_tool.py') }}" download>UART Simulation Python Script</a></li>
-    <li><a href="{{ url_for('static', filename='files/reverse_engineering_slides.pdf') }}" download>Reverse Engineering Slides (PDF)</a></li>
-  </ul>
-{% endblock %}
+    h1 {
+      font-size: 2.8em;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #FFD700; /* Bold Yellow */
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    .resources-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 3em auto;
+      background-color: #ffffff;
+      color: #000000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .resources-table th, .resources-table td {
+      border: 1px solid #ddd;
+      padding: 1.2em;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .resources-table th {
+      background-color: #1e3c72;
+      color: #ffffff;
+      font-size: 1.1em;
+    }
+
+    .resources-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .resources-table a {
+      color: #2a5298;
+      text-decoration: none;
+    }
+
+    .resources-table a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="content-wrapper">
+    <h1>Resources & Downloads</h1>
+    <p>Explore key topics and top study resources to dominate the MITRE eCTF security challenge.</p>
+
+    <table class="resources-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Description</th>
+          <th>Study Resource</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Secure Boot & Firmware Integrity</td>
+          <td>Ensure only authenticated firmware runs on devices by implementing digital signature verification and chain-of-trust boot mechanisms.</td>
+          <td><a href="https://nsfocusglobal.com/secure-boot-101-getting-started-with-secure-boot/" target="_blank">NSFOCUS: Secure Boot 101</a></td>
+        </tr>
+        <tr>
+          <td>Cryptographic Principles</td>
+          <td>Understand encryption/decryption, hashing, asymmetric and symmetric cryptography, and secure key exchange techniques.</td>
+          <td><a href="https://www.coursera.org/learn/cryptography" target="_blank">Coursera: Cryptography by Stanford</a></td>
+        </tr>
+        <tr>
+          <td>Embedded Systems Security</td>
+          <td>Learn how embedded devices can be exploited and protected. Explore real-time systems, physical attack vectors, and defense layers.</td>
+          <td><a href="https://www.apriorit.com/dev-blog/690-embedded-systems-attacks" target="_blank">Apriorit: Embedded Attacks</a></td>
+        </tr>
+        <tr>
+          <td>Reverse Engineering</td>
+          <td>Understand firmware structures, disassemble binaries, and analyze system logic for vulnerabilities or key material extraction.</td>
+          <td><a href="https://www.udemy.com/course/reverse-engineering/" target="_blank">Udemy: Reverse Engineering</a></td>
+        </tr>
+        <tr>
+          <td>Hardware Security & Side-Channel Attacks</td>
+          <td>Explore timing analysis, power glitches, electromagnetic leakage, and countermeasures like masking and tamper detection.</td>
+          <td><a href="https://www.newae.com/embedded-security-101" target="_blank">NewAE: Embedded Security 101</a></td>
+        </tr>
+        <tr>
+          <td>Secure Communication Protocols</td>
+          <td>Learn to secure UART, SPI, I2C, and TCP/IP communication using TLS, secure handshakes, and data integrity checks.</td>
+          <td><a href="https://www.udemy.com/course/network-security/" target="_blank">Udemy: Network Security</a></td>
+        </tr>
+        <tr>
+          <td>Access Control & Authentication</td>
+          <td>Study role-based access controls, challenge-response schemes, password storage, and biometric/fingerprint systems.</td>
+          <td><a href="https://www.coursera.org/learn/identity-and-access-management" target="_blank">Coursera: Identity & Access Mgmt</a></td>
+        </tr>
+        <tr>
+          <td>Embedded System Architecture</td>
+          <td>Understand microcontroller internals, memory addressing, interrupt vectors, and register-based control logic.</td>
+          <td><a href="https://embedded.fm/blog/ese101" target="_blank">Embedded.fm: Systems 101</a></td>
+        </tr>
+        <tr>
+          <td>C & Python Programming</td>
+          <td>Become fluent in the low-level C used in firmware and high-level Python used for attack scripting and tooling.</td>
+          <td><a href="https://www.learn-c.org/" target="_blank">Learn C</a> / <a href="https://docs.python.org/3/tutorial/" target="_blank">Python Docs</a></td>
+        </tr>
+        <tr>
+          <td>Secure Coding Practices</td>
+          <td>Prevent buffer overflows, command injections, and unsafe pointer logic through coding standards and input validation.</td>
+          <td><a href="https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/" target="_blank">OWASP Secure Coding</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

@@ -2,32 +2,143 @@
 {% block title %}Home - Cybersecurity Dashboard{% endblock %}
 
 {% block content %}
-  <div class="welcome-section">
-    <h1>Welcome to the MITRE eCTF Dashboard</h1>
-    <h2>👋 Hello ETSU Cyber Bucs! Your dynamic CTF guide is here.</h2>
-    <p>Join us on a vibrant journey through reverse engineering tips, competitive timelines, interactive tools, and much more!</p>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #f4f4f4;
+  }
+
+  .welcome-section {
+    background: linear-gradient(135deg, #1e3c72, #f5f5a3);
+    background-size: 200% 200%;
+    animation: gradientShift 12s ease infinite;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .welcome-section h1 {
+    font-size: 1.8em;
+    margin: 10px 0;
+    font-weight: 900;
+  }
+
+  .welcome-section p {
+    font-size: 0.95em;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  .dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px 15px 50px;
+    background: #ffffff;
+  }
+
+  .card {
+    background: #ffffff;
+    color: #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    width: 200px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    background: #f1f1f1;
+  }
+
+  .card-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .card-description {
+    font-size: 0.85em;
+    color: #444444;
+  }
+
+  .wide-card {
+    width: 300px;
+  }
+
+  .important-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-size: 0.7em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    animation: bounce 1.2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-6px);
+    }
+  }
+</style>
+
+<div class="welcome-section">
+  <h1>Welcome to the MITRE eCTF Dashboard</h1>
+  <p>Explore reverse engineering, timelines, UART tools, and eCTF resources — all on a single page!</p>
+</div>
+
+<div class="dashboard-cards">
+  <!-- First Row: Toolkit + About -->
+  <div class="card wide-card" onclick="window.location.href='/toolkit'">
+    <div class="important-badge">IMPORTANT</div>
+    <div class="card-title">🧰 Toolkit</div>
+    <div class="card-description">UART Simulator & Encoder/Decoder Playground</div>
   </div>
 
-  <div class="dashboard-cards">
-    <div class="card" onclick="window.location.href='/toolkit'">
-      <div class="card-title">🧰 Toolkit</div>
-      <div class="card-description">UART Simulator &amp; Encoder/Decoder Playground</div>
-    </div>
-    <div class="card" onclick="window.location.href='/timeline'">
-      <div class="card-title">🕰️ Timeline</div>
-      <div class="card-description">2024 &amp; 2025 eCTF Events</div>
-    </div>
-    <div class="card" onclick="window.location.href='/learning'">
-      <div class="card-title">🧠 Learning</div>
-      <div class="card-description">Reverse Engineering Modules &amp; Tips</div>
-    </div>
-    <div class="card" onclick="window.location.href='/resources'">
-      <div class="card-title">📥 Resources</div>
-      <div class="card-description">Downloadable Scripts &amp; Guides</div>
-    </div>
-    <div class="card" onclick="window.location.href='/about'">
-      <div class="card-title">📣 About</div>
-      <div class="card-description">Project Info, Credits, and More</div>
-    </div>
+  <div class="card wide-card" onclick="window.location.href='/about'">
+    <div class="card-title">📣 About</div>
+    <div class="card-description">Project Info, Credits, and More</div>
   </div>
+
+  <!-- Second Row -->
+  <div class="card" onclick="window.location.href='/timeline'">
+    <div class="card-title">🕰️ Timeline</div>
+    <div class="card-description">2024 & 2025 eCTF Events</div>
+  </div>
+
+  <div class="card" onclick="window.location.href='/learning'">
+    <div class="card-title">🛠️ My Experience / Implementation</div>
+    <div class="card-description">Insights & implementation from MITRE eCTF 2025</div>
+  </div>
+
+  <div class="card" onclick="window.location.href='/resources'">
+    <div class="card-title">📥 Resources</div>
+    <div class="card-description">Downloadable Scripts & Guides</div>
+  </div>
+</div>
 {% endblock %}

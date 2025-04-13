@@ -1,20 +1,71 @@
 {% extends "layout.html" %}
-
 {% block title %}About - Cybersecurity Dashboard{% endblock %}
 
 {% block content %}
-  <div style="text-align: center;">
-    <h1>About This Dashboard</h1>
-    <p>Welcome to the MITRE eCTF Dashboard — a capstone project crafted for ETSU Cyber Bucs!</p>
-    <p><strong>What is the MITRE eCTF?</strong><br>
-      The Embedded Capture the Flag (eCTF) is an annual cybersecurity competition hosted by MITRE that challenges teams to design secure systems and then exploit vulnerabilities in each other’s devices. This unique format combines both offensive and defensive cybersecurity skills on real embedded systems.
-    </p>
-    <p><strong>What does this dashboard offer?</strong><br>
-      - An interactive timeline of key events for the 2024 and 2025 MITRE eCTF competitions.<br>
-      - A comprehensive learning module with reverse engineering challenges, tips, and resources.<br>
-      - A toolkit featuring a UART simulator and encoding/decoding playground to help you prepare for the attack phase.<br>
-      - Additional downloadable resources and guides.
-    </p>
-    <p>This platform is designed especially for ETSU students to support our journey in the MITRE eCTF. Go Bucs!</p>
-  </div>
+<style>
+  .about-section {
+    background: linear-gradient(to right, #1e3c72, #2a5298); /* Blue gradient background */
+    color: #ffffff;
+    padding: 60px 30px;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  .about-section h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    font-weight: 900;
+    color: #ffd700; /* Yellow */
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .about-section h2 {
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  .about-section p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto 20px;
+  }
+  .about-section a {
+    color: #ffd700;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="about-section">
+  <h1>About</h1>
+  <p>Welcome to the MITRE eCTF Dashboard — a capstone project crafted for ETSU Cyber Bucs! This platform serves as a comprehensive resource for participants of the MITRE Embedded Capture the Flag (eCTF) competition, providing tools, timelines, and learning materials to enhance your cybersecurity journey.</p>
+  <p>As a master's student at ETSU with no prior experience in Capture the Flag (CTF) competitions, I initially felt overwhelmed and unsure of where to begin. This dashboard was created to guide newcomers like myself through the complexities of the eCTF landscape, offering structured resources and support to build confidence and competence in embedded system security.</p>
+
+  <h2>What is the MITRE eCTF?</h2>
+  <p>The Embedded Capture the Flag (eCTF) is an annual cybersecurity competition hosted by <a href="https://ectf.mitre.org/" target="_blank">MITRE</a>. It challenges teams to design secure embedded systems and then exploit vulnerabilities in each other’s devices. This unique format combines both offensive and defensive cybersecurity skills on real embedded systems, offering a hands-on experience that mirrors real-world scenarios.</p>
+  <p>Participants engage in a two-phase competition: the Design Phase, where teams develop a secure system based on specified requirements, and the Attack Phase, where they analyze and attempt to breach other teams' designs. This structure promotes a deep understanding of embedded system security and fosters innovative problem-solving skills.</p>
+
+  <h2>Purpose of This Dashboard</h2>
+  <p>This dashboard was created to centralize all essential resources for ETSU students participating in the eCTF. It offers an interactive timeline of key events, a comprehensive learning module with reverse engineering challenges, a toolkit featuring a UART simulator and encoding/decoding playground, and additional downloadable resources and guides. Our goal is to streamline your preparation and enhance your performance in the competition.</p>
+  <p>By consolidating these resources, we aim to provide a user-friendly platform that supports your learning and development in the field of embedded cybersecurity. Whether you're a novice or an experienced participant, this dashboard is designed to cater to your needs and help you succeed in the eCTF.</p>
+
+  <h2>Why Was This Dashboard Created?</h2>
+  <p>Recognizing the complexity and demands of the eCTF, we developed this dashboard to provide ETSU students with a structured and accessible platform to aid their preparation. The competition's emphasis on both designing secure systems and identifying vulnerabilities requires a diverse skill set. This dashboard serves as a centralized hub to facilitate the acquisition and application of these skills.</p>
+  <p>Furthermore, by offering tools and resources tailored to the competition's requirements, we aim to reduce the learning curve and empower students to approach the eCTF with confidence. This initiative reflects our commitment to fostering a robust cybersecurity education and equipping our students with practical, real-world experience.</p>
+
+  <h2>Beyond eCTF: Why It Matters</h2>
+  <p>Participation in the eCTF extends beyond the competition itself. It provides invaluable experience in embedded system security, a field of growing importance in our increasingly connected world. The skills acquired through the eCTF are directly applicable to securing critical infrastructure, medical devices, automotive systems, and more.</p>
+  <p>Engaging in the eCTF also enhances your resume and opens doors to career opportunities in cybersecurity. The competition's real-world challenges and collaborative environment prepare you for roles that require both technical expertise and strategic thinking. By participating, you're not only competing but also investing in your professional development.</p>
+
+  <h2>Who Hires MITRE eCTF Participants?</h2>
+  <p>Graduates who have participated in the eCTF are highly sought after by organizations that prioritize cybersecurity. Companies such as MITRE, Fortinet, and Analog Devices recognize the value of the hands-on experience and problem-solving skills developed through the competition. These organizations often recruit eCTF participants for roles in embedded system security, threat analysis, and cybersecurity research.</p>
+  <p>Moreover, the eCTF serves as a platform for networking and exposure to industry leaders. Participants have the opportunity to connect with professionals, attend workshops, and gain insights into the latest trends in cybersecurity. This exposure can lead to internships, job offers, and collaborations that propel your career forward.</p>
+
+  <h2>Insights from Recent eCTF Competitions</h2>
+  <p>The eCTF competition, organized by MITRE, challenges participants to design and implement secure embedded systems. For example, the 2025 eCTF focuses on creating a Satellite TV system that securely encodes and decodes data streams while preventing unauthorized access to protected channels. Participants engage in both design and attack phases, gaining hands-on experience in embedded system security. (<a href="https://ectf.mitre.org/" target="_blank">ectf.mitre.org</a>)</p>
+  <p>In the 2023 competition, teams were tasked with designing a secure key fob system for car door locks, aiming to prevent unauthorized entry and attacks like replays and key fob cloning. (<a href="https://ectf.mitre.org/2023-ectf/" target="_blank">ectf.mitre.org/2023-ectf</a>)</p>
+  <p>A study analyzing the 2023 and 2024 eCTF competitions highlighted challenges in securing microcontroller systems, such as adapting security measures from microprocessor to microcontroller environments and the lack of adequate support for security-enhancing tools like Rust on microcontrollers. (<a href="https://arxiv.org/abs/2503.08053" target="_blank">arxiv.org/abs/2503.08053</a>)</p>
+</div>
 {% endblock %}
