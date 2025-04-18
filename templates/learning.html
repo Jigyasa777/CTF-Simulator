@@ -1,112 +1,268 @@
 {% extends "layout.html" %}
-{% block title %}Learning - ETSU CTF Dashboard{% endblock %}
+{% block title %}Learning & Implementation – ETSU CTF Dashboard{% endblock %}
 
 {% block content %}
+  <!-- Interactive Flashcard Style Learning Section -->
   <style>
-    #learning-section {
-      background-color: #1e3c72;
-      text-align: center;
-      padding: 2em;
-      color: #ffffff;
+    :root {
+      --primary-bg: #1e3c72;
+      --accent-color: #FFD700;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --text-light: #ffffff;
+      --transition-speed: 0.6s;
     }
 
-    #learning-section h1 {
-      font-size: 2.8em;
-      font-weight: bold;
-      color: #FFD700;
+    #learning-section {
+      background: linear-gradient(135deg, var(--primary-bg), #27496d);
+      padding: 3rem 1rem;
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+    }
+
+    #learning-section .intro h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent-color), #ffb347);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       animation: bounce 2s infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    #learning-section .intro p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
     }
 
     @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    #learning-section h2 {
-      margin-top: 2em;
-      font-size: 1.8em;
-      color: #ffffff;
+    .flashcards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    #learning-section p, #learning-section ul {
-      font-size: 1.1em;
-      color: #ffffff;
-      max-width: 900px;
-      margin: 0 auto 1.5em;
+    .flashcard {
+      background: transparent;
+      width: 260px;
+      height: 260px;
+      perspective: 1000px;
     }
 
-    #learning-section ul {
-      list-style-type: disc;
-      padding-left: 1.5em;
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform var(--transition-speed);
+      transform-style: preserve-3d;
+    }
+
+    .flashcard:hover .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(5px);
+    }
+
+    .flashcard-front h2 {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .flashcard-front p {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    .flashcard-back {
+      transform: rotateY(180deg);
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .flashcard-back ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       text-align: left;
+      font-size: 0.9rem;
+      color: var(--text-light);
     }
 
-    #learning-section li {
-      margin-bottom: 0.5em;
+    .flashcard-back li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.2em;
     }
 
-    #learning-section a {
-      color: #FFD700;
-      text-decoration: underline;
+    .flashcard-back li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
     }
 
-    #learning-section a:hover {
-      color: #ffffff;
+    .flashcard-back code {
+      background: rgba(255,255,255,0.2);
+      padding: 0.1em 0.3em;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.85rem;
     }
   </style>
 
-  <div class="container" id="learning-section">
-    <h1>My Implementation & Contribution – MITRE eCTF 2025</h1>
-    <p>As part of the MITRE eCTF 2025 capstone competition, I led the secure encoder enhancement efforts. My role focused on transforming the insecure reference design into a hardened, cryptographically sound system.</p>
+  <section id="learning-section">
+    <div class="intro">
+      <h1>My Implementation & Contribution – MITRE eCTF 2025</h1>
+      <p>Hover over each card to flip and reveal the details of my secure encoder enhancements, encryption mechanisms, and environment setup.</p>
+    </div>
 
-    <h2>🔐 Developed a Secure Frame Encoder</h2>
-    <ul>
-      <li>Implemented <strong>ChaCha20-Poly1305</strong> to encrypt TV frames with integrity and confidentiality.</li>
-      <li>Created a robust <strong>nonce strategy</strong> using channel number and timestamps to prevent replay attacks.</li>
-      <li>Integrated <strong>automated key rotation</strong> every 200 frames using HKDF for forward secrecy.</li>
-    </ul>
+    <div class="flashcards">
+      <!-- Card 1 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Secure Frame Encoder</h2>
+            <p>AEAD <code>ChaCha20-Poly1305</code></p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>Nonce: 32-bit channel ID + 64-bit timestamp</li>
+              <li>Key Rotation: New 256-bit key via <code>HKDF-SHA256</code> every 200 frames</li>
+              <li>Single-pass encryption + auth tag</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>📁 Designed a Hybrid File Encryption Mechanism</h2>
-    <ul>
-      <li>Combined symmetric (ChaCha20-Poly1305) and asymmetric (RSA-OAEP) encryption for secure file transfer.</li>
-      <li>Structured output as a secure JSON containing <em>nonce, ciphertext, tag, and encrypted keys</em>.</li>
-    </ul>
+      <!-- Card 2 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Hybrid File Encryption</h2>
+            <p>Symmetric + Asymmetric</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>Session key: Random 256-bit</li>
+              <li>File data: Encrypted with ChaCha20-Poly1305</li>
+              <li>Key wrapped: RSA-OAEP to recipients</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>🔐 Managed Secrets & Decoder Subscriptions</h2>
-    <ul>
-      <li>Modified <code>gen_secrets.py</code> to generate secure root keys and salts.</li>
-      <li>Enhanced <code>gen_subscription.py</code> to enforce strict access via device IDs, time windows, and one-time tokens.</li>
-      <li>Successfully met <strong>Security Requirement 1</strong>: Only valid, active subscriptions can decode frames.</li>
-    </ul>
+      <!-- Card 3 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Secrets & Subscriptions</h2>
+            <p><code>gen_secrets.py</code> & <code>gen_subscription.py</code></p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>ROOT & SALT generated at runtime</li>
+              <li>.sub files: Device ID, time window, channel rules</li>
+              <li>Only active subscriptions unlock decryption</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>🖥️ Performed Firmware Flashing & Environment Setup (Windows)</h2>
-    <ul>
-      <li>Installed and configured <strong>Python 3.11+, Docker, and Git</strong> on Windows for the dev environment.</li>
-      <li>Cloned MITRE repo, built Docker image, and simulated firmware using decoder binaries.</li>
-      <li>Flashed the <strong>MAX78000FTHR board</strong> via DAPLink using PowerShell and validated COM port connections.</li>
-    </ul>
+      <!-- Card 4 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Setup & Board Flashing</h2>
+            <p>Windows Dev Environment</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>Install: Git, Docker, Python 3.11+</li>
+              <li>Clone: <code>git clone https://github.com/.../2025-ectf-insecure-example</code></li>
+              <li>Flash: Drag insecure.bin → DAPLink & <code>python -m ectf25.utils.flash</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>📈 Ensured Alignment with Best Practices</h2>
-    <ul>
-      <li>Followed a <strong>modular design</strong> for secure and maintainable code.</li>
-      <li>Used <strong>dynamic secret generation</strong> to eliminate hardcoded keys.</li>
-      <li>Applied <strong>PyCryptodome</strong> for cryptographic logic in clean, reusable class structures.</li>
-    </ul>
+      <!-- Card 5 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>File Structure</h2>
+            <p>Key Directories</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li><code>/tools/</code>: CLI scripts</li>
+              <li><code>/design/</code>: gen_* scripts</li>
+              <li><code>/decoder/</code>: Docker & code</li>
+              <li><code>/deadbeef_build/</code>: Firmware bins</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>✅ Outcome of My Contribution</h2>
-    <ul>
-      <li>Produced a secure encoder system that’s compatible with MITRE’s decoder, yet resistant to unauthorized decryption.</li>
-      <li>Demonstrated subscription-bound encryption that satisfies security mandates.</li>
-      <li>Built a ready-to-deploy hybrid encryption tool and a complete Windows-based setup guide for teammates and future students.</li>
-    </ul>
+      <!-- Card 6 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Security Req 1</h2>
+            <p>Subscription Control</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>Subscription binds frame to device & window</li>
+              <li>RSA-OAEP key wrap enforces only valid subs</li>
+              <li>HKDF & unique nonce prevent replay</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>🌟 Why My Contribution Matters</h2>
-    <p>
-      My work tackles real-world challenges in embedded system security—like firmware protection and secret management. By integrating encryption best practices and secure modular code, I not only strengthened our team's encoder security but also created a platform that others in the community can learn from and build upon.
-    </p>
-  </div>
+      <!-- Card 7 -->
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <h2>Future Directions</h2>
+            <p>Next Steps</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <ul>
+              <li>ECDSA digital signatures</li>
+              <li>SIEM integration & alerts</li>
+              <li>Embedded C port with mbed TLS</li>
+              <li>CI/CD & static analysis</li>
+              <li>Host dashboard publicly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

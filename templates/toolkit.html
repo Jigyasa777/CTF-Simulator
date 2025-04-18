@@ -2,149 +2,389 @@
 {% block title %}Toolkit - Cybersecurity Dashboard{% endblock %}
 
 {% block content %}
+<!-- Include CryptoJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
 <style>
   .toolkit-section {
     background: #fff8dc;
     padding: 60px 30px;
     color: #001f3f;
-    min-height: 100vh;
   }
+
   .toolkit-banner {
-    background-color: #ffcc00;
+    background: #ffcc00;
     color: #000;
-    font-size: 1.6rem;
+    font-size: 2.5rem;
     text-align: center;
-    padding: 14px;
+    padding: 16px;
     margin-bottom: 40px;
     border-radius: 10px;
     font-weight: 900;
     animation: bounce 1s infinite;
   }
+
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
   }
-  .terminal-window, .code-block {
-    background-color: #f4f4f4;
-    color: #000;
+
+  .toolkit-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .tool-card {
+    background: #f0f0f0;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    flex: 1 1 45%;
+    max-width: 600px;
+    min-width: 350px;
+  }
+
+  .flash-button {
+    background: #ff0000;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: bounce-red 1s infinite;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+
+  .flash-button:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes bounce-red {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .quiz-input, .crypto-input, .search-input {
+    width: 100%;
     padding: 10px;
     margin-top: 10px;
-    border-radius: 5px;
-    font-family: monospace;
-  }
-  .instructions {
-    background: #fffbcc;
-    padding: 10px 15px;
-    border-left: 5px solid #ffcc00;
-    margin-bottom: 10px;
     border-radius: 6px;
-    font-size: 0.95rem;
+    border: 1px solid #ccc;
   }
+
+  .quiz-btn, .crypto-btn, .search-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    background: #001f3f;
+    color: white;
+    cursor: pointer;
+  }
+
+  .quiz-btn:hover, .crypto-btn:hover, .search-btn:hover {
+    background: #003366;
+  }
+  /* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 900px;
+  color: #000;
+}
+
+.close {
+  color: #f00;
+  font-size: 30px;
+  float: right;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 </style>
 
 <div class="toolkit-section">
   <div class="toolkit-banner">🔥 <strong>Learn by Doing</strong> 🔥</div>
-  <h1 class="toolkit-header">Embedded Security Toolkit</h1>
-  <p style="text-align:center;">These hands-on exercises are modeled after real-world scenarios faced in the MITRE eCTF. Follow the instructions to simulate secure design and attack techniques.</p>
 
-  <div class="toolkit-grid">
-    <!-- UART CLI Demo Card -->
-    <div class="tool-card">
-      <h2>UART Console Demo</h2>
-      <div class="instructions">
-        <strong>Instructions:</strong><br>
-        1. Type a command below.<br>
-        2. Valid commands include: <code>help</code>, <code>ping</code>, <code>version</code>, <code>reboot</code>.<br>
-        3. This simulates UART communication with an embedded device.<br>
-        <strong>MITRE eCTF Relevance:</strong> Simulates insecure UARTs often exposed in competition boards.
-      </div>
-      <input type="text" id="uart-input" placeholder="Enter UART command" />
-      <button class="launch-btn" onclick="runUART()">Run Command</button>
-      <pre id="uart-terminal" class="terminal-window"></pre>
-    </div>
-
+  <!-- Row 1 -->
+  <div class="toolkit-row">
     <!-- Crypto Playground -->
     <div class="tool-card">
-      <h2>Crypto Playground</h2>
-      <div class="instructions">
-        <strong>Instructions:</strong><br>
-        1. Type any plaintext to simulate encryption.<br>
-        2. The result will appear as reversed text (mock AES).<br>
-        <strong>MITRE eCTF Relevance:</strong> Useful to explore custom cryptographic implementations.<br>
-      </div>
-      <input type="text" id="plaintext" placeholder="Enter plaintext" />
-      <button onclick="doEncrypt()">Encrypt</button>
-      <pre id="ciphertext" class="terminal-window"></pre>
+      <h2>Crypto Playground 🔒</h2>
+      <ul>
+        <li>Enter a 128-bit key.</li>
+        <li>Encrypt/Decrypt using AES (Base64).</li>
+      </ul>
+      <input type="text" id="crypto-key" class="crypto-input" placeholder="Enter 128-bit key">
+      <input type="text" id="crypto-plain" class="crypto-input" placeholder="Enter plaintext">
+      <button class="crypto-btn" onclick="encryptText()">Encrypt</button>
+      <p><strong>Encrypted:</strong> <span id="crypto-encrypted"></span></p>
+      <input type="text" id="crypto-cipher" class="crypto-input" placeholder="Enter ciphertext">
+      <button class="crypto-btn" onclick="decryptText()">Decrypt</button>
+      <p><strong>Decrypted:</strong> <span id="crypto-decrypted"></span></p>
     </div>
 
-    <!-- Firmware RE Lab -->
+    <!-- Firmware Treasure Hunt -->
     <div class="tool-card">
-      <h2>Firmware Reverse Engineering Lab</h2>
-      <div class="instructions">
-        <strong>Instructions:</strong><br>
-        1. Click the button below to view a snippet of firmware.<br>
-        2. Observe patterns like hardcoded secrets and function calls.<br>
-        <strong>MITRE eCTF Relevance:</strong> Demonstrates how attackers extract sensitive logic from binaries.
+      <h2>Firmware Treasure Hunt 🔍</h2>
+      <p><strong>Goal:</strong> Find <code>FLAG</code> at <code>0x08000000</code></p>
+      <input type="text" id="offset" class="search-input" placeholder="Offset (e.g., 0x08000000)">
+      <input type="text" id="pattern" class="search-input" placeholder="Pattern (e.g., 464C4147)">
+      <button class="search-btn" onclick="searchMemory()">Search</button>
+      <p><strong>Result:</strong> <span id="search-result"></span></p>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="toolkit-row">
+    <!-- MITRE Entrance Code Quiz -->
+    <div class="tool-card">
+      <h2>MITRE Entrance Code Quiz 💻</h2>
+      <p><strong>Challenge:</strong> Solve Python + C++ puzzles.</p>
+      <div id="quiz-app">
+        <div id="quiz-q"></div>
+        <div id="quiz-options"></div>
+        <button class="quiz-btn" onclick="prevQuestion()">Previous</button>
+        <button class="quiz-btn" onclick="nextQuestion()">Next</button>
+        <p id="quiz-feedback"></p>
       </div>
-      <button class="launch-btn" onclick="showFirmware()">Toggle Firmware Dump</button>
-      <pre id="firmware-sample" class="code-block" style="display:none;">
-08000000 <start>:
-08000000:  LDR R0, =SecretKey
-08000004:  BL  DecryptToken
-...
-08000020 <SecretKey>:
-08000020:  .word 0x12EF56AB
-      </pre>
     </div>
 
-    <!-- JTAG Debug Lab -->
-    <div class="tool-card">
-      <h2>Hardware Debug (JTAG)</h2>
-      <div class="instructions">
-        <strong>Instructions:</strong><br>
-        1. Click the button to simulate a JTAG debugging session.<br>
-        2. This showcases OpenOCD-style output from memory reads.<br>
-        <strong>MITRE eCTF Relevance:</strong> JTAG often exposes flash memory or keys in embedded systems.
-      </div>
-      <button class="launch-btn" onclick="showJTAG()">View Debug Output</button>
-      <pre id="jtag-demo" class="code-block" style="display:none;">
-> openocd -f interface.cfg -c "init; halt"
-TARGET HALTED at 0x08001000
-> mdw 0x08008000 3
-08008000: 45435446 7B4B3A...
-      </pre>
-    </div>
+  <!-- Flashing the Board -->
+<div class="tool-card">
+  <h2>Flashing the Board 💾</h2>
+  <button class="flash-button" onclick="document.getElementById('flashModal').style.display='block'">Click to Open Flashing Guide</button>
+</div>
+
+
+<script>
+  function encryptText() {
+    const keyInput = document.getElementById("crypto-key").value;
+    const text = document.getElementById("crypto-plain").value;
+
+    const key = CryptoJS.enc.Utf8.parse(keyInput.padEnd(16, '0').slice(0, 16)); // 128-bit key
+    const encrypted = CryptoJS.AES.encrypt(text, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    }).toString();
+
+    document.getElementById("crypto-encrypted").innerText = encrypted;
+  }
+
+  function decryptText() {
+    const keyInput = document.getElementById("crypto-key").value;
+    const ciphertext = document.getElementById("crypto-cipher").value;
+
+    try {
+      const key = CryptoJS.enc.Utf8.parse(keyInput.padEnd(16, '0').slice(0, 16)); // Same 128-bit key
+      const decrypted = CryptoJS.AES.decrypt(ciphertext, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+      }).toString(CryptoJS.enc.Utf8);
+
+      document.getElementById("crypto-decrypted").innerText = decrypted || "[❌ Wrong key or bad input]";
+    } catch (err) {
+      document.getElementById("crypto-decrypted").innerText = "[❌ Error decrypting]";
+    }
+  }
+
+  function searchMemory() {
+    const offset = document.getElementById("offset").value;
+    const pattern = document.getElementById("pattern").value;
+    document.getElementById("search-result").innerText = `Searching ${pattern} at ${offset}... (simulated)`;
+  }
+
+  const questions = [
+    {
+      q: "🐍 Q1. What is the output of this bitwise operation?\n\n    x = 0b1100\n    y = 0b1010\n    print(x & y)",
+      options: ["0b1110", "8", "12"],
+      correct: 1
+    },
+    {
+      q: "🐍 Q2. What will this code print?\n\n    data = \"MITRE2025\"\n    print(data.encode('utf-8'))",
+      options: ["b'MITRE2025'", "'MITRE2025'", "[77, 73, 84, 82, 69, 50, 48, 50, 53]"],
+      correct: 0
+    },
+    {
+      q: "🐍 Q3. XOR Encryption Simulation\n\n    def xor_encrypt(char, key):\n        return chr(ord(char) ^ key)\n\n    print(xor_encrypt('A', 5))",
+      options: ["F", "D", "E"],
+      correct: 2
+    },
+    {
+      q: "🐍 Q4. Hex Dump Emulation\n\n    data = \"FLAG\"\n    print(data.encode().hex())",
+      options: ["464c4147", "FLAG", "['F', 'L', 'A', 'G']"],
+      correct: 0
+    },
+    {
+      q: "🐍 Q5. Secure Random Key\n\n    import os\n    key = os.urandom(16)\n    print(key.hex())",
+      options: ["A fixed 32-character hex string", "Random 16-character string", "Random 32-character hex string"],
+      correct: 2
+    },
+    {
+      q: "💻 Q6. Bitmask Check (C++)\n\n    int flags = 0b101101;\n    if (flags & 0b001000)\n        std::cout << \"Bit is set\";",
+      options: ["Bit is set", "Nothing", "Bit is not set"],
+      correct: 0
+    },
+    {
+      q: "💻 Q7. Byte Array Access (C++)\n\n    char data[] = {'M', 'I', 'T', 'R', 'E'};\n    std::cout << data[2];",
+      options: ["I", "R", "T"],
+      correct: 2
+    },
+    {
+      q: "💻 Q8. Pointer Basics (C++)\n\n    int x = 42;\n    int* ptr = &x;\n    std::cout << *ptr;",
+      options: ["Memory address of x", "42", "*ptr"],
+      correct: 1
+    },
+    {
+      q: "💻 Q9. XOR Obfuscation (C++)\n\n    char c = 'A';\n    char encrypted = c ^ 5;\n    std::cout << encrypted;",
+      options: ["F", "E", "Non-printable character"],
+      correct: 1
+    },
+    {
+      q: "💻 Q10. Loop through Flash Page (Simulated C++)\n\n    for (int i = 0; i < 4; i++) {\n        std::cout << std::hex << i * 16 << \"\\n\";\n    }",
+      options: ["10, 20, 30, 40", "0, 10, 20, 30", "0, 10, 20, 30 (in hex: 0, 10, 20, 30)"],
+      correct: 2
+    }
+  ];
+
+  let current = 0;
+  const userAnswers = new Array(questions.length).fill(null);
+
+  function loadQuestion() {
+    const qBlock = document.getElementById('quiz-q');
+    const optBlock = document.getElementById('quiz-options');
+    const feedback = document.getElementById('quiz-feedback');
+    const q = questions[current];
+    qBlock.innerText = q.q;
+    optBlock.innerHTML = q.options.map((opt, i) =>
+      `<label><input type='radio' name='opt' value='${i}' ${userAnswers[current] == i ? "checked" : ""}> ${opt}</label><br>`).join('');
+    feedback.innerText = "";
+  }
+
+  function nextQuestion() {
+    const selected = document.querySelector('input[name="opt"]:checked');
+    if (selected) userAnswers[current] = parseInt(selected.value);
+    if (current < questions.length - 1) {
+      current++;
+      loadQuestion();
+    } else {
+      evaluateQuiz();
+    }
+  }
+
+  function prevQuestion() {
+    if (current > 0) {
+      current--;
+      loadQuestion();
+    }
+  }
+
+  function evaluateQuiz() {
+    const correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    const feedback = document.getElementById('quiz-feedback');
+    feedback.innerText = `✅ You got ${correct}/${questions.length} correct. ${correct === questions.length ? "You Passed! 🎉" : "You Failed. Try Again."}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", loadQuestion);
+  // Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById('flashModal');
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
+<!-- Flash Modal -->
+<div id="flashModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="document.getElementById('flashModal').style.display='none'">&times;</span>
+    <h3>🛠️ Prerequisites</h3>
+    <p>Before you begin, ensure you have the following installed on your system:</p>
+    <ul>
+      <li>Git</li>
+      <li>Python 3.9+</li>
+      <li>Poetry</li>
+      <li>Docker</li>
+      <li>Nix (for managing dependencies)</li>
+      <li>OpenOCD</li>
+      <li>arm-none-eabi-gcc</li>
+      <li>make</li>
+    </ul>
+    <p>For detailed setup instructions, refer to the Machine Setup Guide.</p>
+
+    <h3>🔌 Step 1: Flash the Insecure Bootloader</h3>
+    <ul>
+      <li>Connect the MAX78000FTHR board via USB (DAPLink).</li>
+      <li>Download <code>insecure.bin</code>.</li>
+      <li>Drag & drop it onto the DAPLink drive.</li>
+      <li>✅ Blue LED flashes = success!</li>
+    </ul>
+
+    <h3>🧪 Step 2: Clone the Reference Design</h3>
+    <pre><code>git clone https://github.com/mitre-cyber-academy/2025-ectf-insecure-example
+cd 2025-ectf-insecure-example</code></pre>
+
+    <h3>🐍 Step 3: Set Up Python Virtual Environment</h3>
+    <pre><code>python -m venv .venv --prompt ectf-example
+# Activate:
+# Windows:
+.\.venv\Scripts\Activate.ps1
+# Linux/macOS:
+source .venv/bin/activate
+# Install:
+python -m pip install ./tools/
+python -m pip install -e ./design/</code></pre>
+
+    <h3>🔐 Step 4: Generate Shared Secrets</h3>
+    <pre><code>python -m ectf25_design.gen_secrets global.secrets 1 3 4</code></pre>
+
+    <h3>🐳 Step 5: Build the Decoder Firmware Using Docker</h3>
+    <pre><code>docker build -t build-decoder ./decoder
+docker run --rm \
+  -v ./decoder/:/decoder \
+  -v ./global.secrets:/global.secrets \
+  -v ./deadbeef_build:/out \
+  -e DECODER_ID=0xdeadbeef \
+  build-decoder</code></pre>
+
+    <h3>🔄 Step 6: Enter Update Mode</h3>
+    <ul>
+      <li>Unplug the board.</li>
+      <li>Press and hold <code>SW1</code>, re-plug USB, wait for blinking blue LED.</li>
+    </ul>
+
+    <h3>📤 Step 7: Flash the Decoder Firmware</h3>
+    <p><strong>Windows:</strong></p>
+    <pre><code>python -m ectf25.utils.flash .\deadbeef_build\max78000.bin COM3</code></pre>
+    <p><strong>Linux/macOS:</strong></p>
+    <pre><code>python -m ectf25.utils.flash ./deadbeef_build/max78000.bin /dev/ttyUSB0</code></pre>
+
+    <h3>✅ Verification</h3>
+    <p>The board should reboot and run the new firmware. Use serial tools to confirm output.</p>
   </div>
 </div>
 
-<script>
-  function runUART() {
-    const input = document.getElementById('uart-input').value.trim().toLowerCase();
-    const output = document.getElementById('uart-terminal');
-    let result = "";
-    switch (input) {
-      case 'help': result = "Available commands: help, ping, reboot, version"; break;
-      case 'ping': result = "PONG"; break;
-      case 'reboot': result = "Rebooting system...\nDone. (This is just a simulation!)"; break;
-      case 'version': result = "Device Firmware v1.2.3 (Simulated)"; break;
-      default: result = `Unknown command: ${input}`;
-    }
-    output.innerText = result;
-  }
-
-  function showFirmware() {
-    let firmware = document.getElementById('firmware-sample');
-    firmware.style.display = firmware.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function showJTAG() {
-    let jtag = document.getElementById('jtag-demo');
-    jtag.style.display = jtag.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function doEncrypt() {
-    let text = document.getElementById('plaintext').value;
-    document.getElementById('ciphertext').innerText = text ? text.split('').reverse().join('') : '';
-  }
-</script>
 {% endblock %}

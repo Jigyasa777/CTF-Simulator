@@ -24,7 +24,7 @@
       text-align: center;
       margin-bottom: 20px;
       font-weight: 700;
-      color: #FFD700; /* Bold Yellow */
+      color: #FFD700;
       animation: bounce 2s infinite;
     }
 
@@ -76,6 +76,37 @@
     }
 
     .resources-table a:hover {
+      text-decoration: underline;
+    }
+
+    .link-section {
+      background-color: #ffffff;
+      color: #000000;
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .link-section h2 {
+      color: #1e3c72;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .link-section ul {
+      list-style-type: none;
+      padding: 0;
+      line-height: 2em;
+      font-size: 1.05em;
+    }
+
+    .link-section li a {
+      color: #2a5298;
+      font-weight: bold;
+    }
+
+    .link-section li a:hover {
       text-decoration: underline;
     }
   </style>
@@ -146,6 +177,25 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- ✅ NEW MITRE LINKS SECTION -->
+    <section class="link-section">
+      <h2>🔗 Additional MITRE eCTF Links & References</h2>
+      <ul>
+        <li><a href="https://github.com/mitre-cyber-academy/2024-ectf-insecure-example" target="_blank">GitHub: 2024 Insecure Example</a></li>
+        <li><a href="https://github.com/mitre-cyber-academy/2025-ectf-insecure-example" target="_blank">GitHub: 2025 Insecure Example</a></li>
+        <li><a href="https://www.etsu.edu/cbat/news_cbat/24.11.19_2024_cyberbucs_cyberforce_comp.php" target="_blank">ETSU News: 2024 CyberBucs at CyberForce</a></li>
+        <li><a href="https://ectf.mitre.org/" target="_blank">Official MITRE eCTF Website</a></li>
+        <li><a href="https://rules.ectf.mitre.org/2024/index.html" target="_blank">MITRE eCTF Rules (2024)</a></li>
+        <li><a href="https://rules.ectf.mitre.org/2025/index.html" target="_blank">MITRE eCTF Rules (2025)</a></li>
+        <li><a href="https://rules.ectf.mitre.org/2025/getting_started/max78000_fthr.html" target="_blank">MAX78000FTHR Setup (2025)</a></li>
+        <li><a href="https://rules.ectf.mitre.org/2025/system/bootloader.html" target="_blank">Bootloader Reference (2025)</a></li>
+        <li><a href="https://rules.ectf.mitre.org/2025/getting_started/boot_reference.html" target="_blank">Boot Reference Design Overview (2025)</a></li>
+        <li><a href="https://academy.mitre.org/" target="_blank">MITRE Cyber Academy</a></li>
+        <li><a href="https://www.newae.com/embedded-security-101" target="_blank">NewAE: Embedded Security 101</a></li>
+        <li><a href="https://attack.mitre.org/matrices/enterprise/" target="_blank">MITRE ATT&CK for Embedded Systems</a></li>
+      </ul>
+    </section>
   </main>
 </body>
 </html>
